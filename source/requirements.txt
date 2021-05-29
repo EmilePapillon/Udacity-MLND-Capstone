@@ -1,0 +1,12 @@
+# pytorch
+torchvision
+# cudatoolkit
+matplotlib
+scikit-image
+# opencv-python
+yacs
+joblib
+natsort==7.1.1
+h5py
+tqdm
+warmup_scheduler==0.3
