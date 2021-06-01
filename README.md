@@ -59,6 +59,7 @@ Here is a performance comparison taken from the publication cited abov.
 Times are for running on the Nvidia Titan Xp GPU.
 
 | Method        | DeblurGAN-v2  | SRN   | DMPHN | Suin | MPRNet (Ours) |
+| ------------- | ------------- | ----- | ----- | ---- | ------------- |
 |  PSNR (dB)    | 29.55         | 30.10 | 31.20 | 31.85| 32.66         | 
 | Million Params| 60.9          |   6.8 | 21.7  | 23.0 | 20.1          |
 | Time (S)      | 0.21          |  0.57 | 1.07  | 0.34 | 0.18          |
