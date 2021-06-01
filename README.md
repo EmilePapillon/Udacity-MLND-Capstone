@@ -41,21 +41,14 @@ _(approx. 2-4 pages)_
 
 To train the model, the GoPro dataset for deblurring is used. The data contains 2103 training pairs (clean - blurr) with a size of 1,280×720px and 1111 images for validation of the same size. The dataset consists of pairs of a realistic blurry image and the corresponding ground truth sharp images that are obtained by a high-speed camera. The dataset is [publicly available](https://seungjunnah.github.io/Datasets/gopro).
 
-The inputs to test our model will be images taken from blurry video and blurry photos taken with a DSLR camera.
+We also provide our own image for testing the model. The image was taken with a DSLR and is purposedly blurry. The PSNR will be calculated on this image. 
 
+To illustrate the dataset used for training and validation, here is a sample of 4 images taken from the training datase (we are showing the blurry and sharp images for 4 data points) as well as the PSNR for each point.
 
-In this section, you will be expected to analyze the data you are using for the problem. This data can either be in the form of a dataset (or datasets), input data (or input files), or even an environment. The type of data should be thoroughly described and, if possible, have basic statistics and information presented (such as discussion of input features or defining characteristics about the input or environment). Any abnormalities or interesting qualities about the data that may need to be addressed have been identified (such as features that need to be transformed or the possibility of outliers). 
-
-Questions to ask yourself when writing this section:
-- _If a dataset is present for this problem, have you thoroughly discussed certain features about the dataset? Has a data sample been provided to the reader?_
-- _If a dataset is present for this problem, are statistics about the dataset calculated and reported? Have any relevant results from this calculation been discussed?_
-- _If a dataset is **not** present for this problem, has discussion been made about the input space or input data for your problem?_
-- _Are there any abnormalities or characteristics about the input space or dataset that need to be addressed? (categorical variables, missing values, outliers, etc.)_
+![PSNR](images/sample_examples.png)
 
 ### Exploratory Visualization
 In this section, you will need to provide some form of visualization that summarizes or extracts a relevant characteristic or feature about the data. The visualization should adequately support the data being used. Discuss why this visualization was chosen and how it is relevant. 
-
-![PSNR](images/sample_examples.png)
 
 Questions to ask yourself when writing this section:
 - _Have you visualized a relevant characteristic or feature about the dataset or input data?_
