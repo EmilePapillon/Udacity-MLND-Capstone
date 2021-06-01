@@ -38,6 +38,12 @@ According to Wikipedia "Peak signal-to-noise ratio (PSNR) is an engineering term
 _(approx. 2-4 pages)_
 
 ### Data Exploration
+
+To train the model, the GoPro dataset for deblurring is used. The data contains 2103 training pairs (clean - blurr) with a size of 1,280×720px and 1111 images for validation of the same size. The dataset consists of pairs of a realistic blurry image and the corresponding ground truth sharp images that are obtained by a high-speed camera. The dataset is [publicly available](https://seungjunnah.github.io/Datasets/gopro).
+
+The inputs to test our model will be images taken from blurry video and blurry photos taken with a DSLR camera.
+
+
 In this section, you will be expected to analyze the data you are using for the problem. This data can either be in the form of a dataset (or datasets), input data (or input files), or even an environment. The type of data should be thoroughly described and, if possible, have basic statistics and information presented (such as discussion of input features or defining characteristics about the input or environment). Any abnormalities or interesting qualities about the data that may need to be addressed have been identified (such as features that need to be transformed or the possibility of outliers). 
 
 Questions to ask yourself when writing this section:
