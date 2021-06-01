@@ -37,7 +37,6 @@ According to Wikipedia "Peak signal-to-noise ratio (PSNR) is an engineering term
 In other words, the PSNR can be seen as the noise in the blurry image as compared to the sharp one (in decibels).
 
 ## II. Analysis
-_(approx. 2-4 pages)_
 
 ### Data Exploration
 
@@ -45,19 +44,25 @@ To train the model, the GoPro dataset for deblurring is used. The data contains 
 
 We also provide our own image for testing the model. The image was taken with a DSLR and is purposedly blurry. The PSNR will be calculated on this image. 
 
-To illustrate the dataset used for training and validation, here is a sample of 4 images taken from the training datase (we are showing the blurry and sharp images for 4 data points) as well as the PSNR for each point.
+To illustrate the dataset used for training and validation, in the next section is a sample of 4 images taken from the training datase (we are showing the blurry and sharp images for 4 data points) as well as the PSNR for each point.
+
+### Exploratory Visualization
+
+The following illustrates a sample of our training dataset. Images on the left are blurry and images on the right are sharp. The PSNR (in dB) in the left columns quantifies the amount of blur in the blurry images. 
 
 ![PSNR](images/sample_examples.png)
 
-### Exploratory Visualization
-In this section, you will need to provide some form of visualization that summarizes or extracts a relevant characteristic or feature about the data. The visualization should adequately support the data being used. Discuss why this visualization was chosen and how it is relevant. 
-
-Questions to ask yourself when writing this section:
-- _Have you visualized a relevant characteristic or feature about the dataset or input data?_
-- _Is the visualization thoroughly analyzed and discussed?_
-- _If a plot is provided, are the axes, title, and datum clearly defined?_
-
 ### Algorithms and Techniques
+The model used was the MPRNet described in great details [in this article](https://arxiv.org/pdf/2102.02808.pdf). The reader is advised to consult the work done developing the MPRNet to gain further familiarity with the model. The element that most differentiates this model is the multi-stage approach to noise reduction. The majority of image restoration methods use single stage. 
+
+Here is a performance comparison taken from the publication cited abov.
+Times are for running on the Nvidia Titan Xp GPU.
+
+| Method        | DeblurGAN-v2  | SRN   | DMPHN | Suin | MPRNet (Ours) |
+|  PSNR (dB)    | 29.55         | 30.10 | 31.20 | 31.85| 32.66         | 
+| Million Params| 60.9          |   6.8 | 21.7  | 23.0 | 20.1          |
+| Time (S)      | 0.21          |  0.57 | 1.07  | 0.34 | 0.18          |
+
 In this section, you will need to discuss the algorithms and techniques you intend to use for solving the problem. You should justify the use of each one based on the characteristics of the problem and the problem domain. Questions to ask yourself when writing this section:
 - _Are the algorithms you will use, including any default variables/parameters in the project clearly defined?_
 - _Are the techniques to be used thoroughly discussed and justified?_
