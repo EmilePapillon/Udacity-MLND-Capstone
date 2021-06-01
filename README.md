@@ -4,7 +4,6 @@ Emile Papillon
 June 1st, 2021
 
 ## I. Definition
-_(approx. 1-2 pages)_
 
 ### Project Overview
 
@@ -20,15 +19,17 @@ The MPRNet model is currently (as of June 2021) in second rank [on the PSNR scal
 
 As photographers, sometimes we get disappointed when we view our photos or video footage on a large screen. An image that we were convinced was crisp isn't so sharp when enlarged. To solve this, some people are using machine learning to recreate the image to add back the information lost by the blurr. There are applications available to correct photos using machine learning but since these applications were launched, significant progress has been made in the field of image restoration. 
 
-Blurry photographs can be improved using machine learning. The problem to be solved is deblurring blurry images. 
-
-In this section, you will want to clearly define the problem that you are trying to solve, including the strategy (outline of tasks) you will use to achieve the desired solution. You should also thoroughly discuss what the intended solution will be for this problem. Questions to ask yourself when writing this section:
-- _Is the problem statement clearly defined? Will the reader understand what you are expecting to solve?_
-- _Have you thoroughly discussed how you will attempt to solve the problem?_
-- _Is an anticipated solution clearly defined? Will the reader understand what results you are looking for?_
+Blurry photographs can be improved using machine learning. The problem to be solved is deblurring blurry images. The MPRNet model is the second best model as of now to solve this problem, so we will leverage the design in this project. 
 
 ### Metrics
-In this section, you will need to clearly define the metrics or calculations you will use to measure performance of a model or result in your project. These calculations and metrics should be justified based on the characteristics of the problem and problem domain. Questions to ask yourself when writing this section:
+The Peak Signal to Noise Ratio (PSNR) is the metric used to define how much blur was removed from an image. 
+
+Peak signal to noise ratio is used to quantify the amount of blur in the images by comparing them to a "perfect" image (one without blur). In the following image (generated from our jupyter notebook), we look at the training data's PSNR, that is the peak signal to noise ratio between the trainin set's features and labels.
+
+![PSNR](images/psnr.svg)
+
+PSNR Can be obtained by the following calculation:
+Questions to ask yourself when writing this section:
 - _Are the metrics you’ve chosen to measure the performance of your models clearly discussed and defined?_
 - _Have you provided reasonable justification for the metrics chosen based on the problem and solution?_
 
