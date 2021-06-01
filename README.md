@@ -27,7 +27,12 @@ The Peak Signal to Noise Ratio (PSNR) is the metric used to define how much blur
 Peak signal to noise ratio is used to quantify the amount of blur in the images by comparing them to a "perfect" image (one without blur). In the following image (generated from our jupyter notebook), we look at the training data's PSNR, that is the peak signal to noise ratio between the trainin set's features and labels.
 
 PSNR Can be obtained by the following calculation:
+
 ![PSNR](images/psnr.svg)
+
+Where: 
+MAX_I is the largest value of the pixels, here 255, and MSE is the mean squared error between the perfect image, and the blurry one. 
+According to Wikipedia "Peak signal-to-noise ratio (PSNR) is an engineering term for the ratio between the maximum possible power of a signal and the power of corrupting noise". As we can see from the calculation, the larger the corrupting noise, the larger  the MSE, and the lower the PSNR (and vice-versa).
 
 ## II. Analysis
 _(approx. 2-4 pages)_
