@@ -53,6 +53,9 @@ The following illustrates a sample of our training dataset. Images on the left a
 ![PSNR](images/sample_examples.png)
 
 ### Algorithms and Techniques
+
+There is no preprocessing done with the images except format changes between numpy arrays and tensors. Hence, in this section we will give a few words about the model and the number of parameters.
+
 The model used was the MPRNet described in great details [in this article](https://arxiv.org/pdf/2102.02808.pdf). The reader is advised to consult the work done developing the MPRNet to gain further familiarity with the model. The element that most differentiates this model is the multi-stage approach to noise reduction. The majority of image restoration methods use single stage. 
 
 Here is a performance comparison taken from the publication cited abov.
@@ -64,48 +67,95 @@ Times are for running on the Nvidia Titan Xp GPU.
 | Million Params| 60.9          |   6.8 | 21.7  | 23.0 | 20.1          |
 | Time (S)      | 0.21          |  0.57 | 1.07  | 0.34 | 0.18          |
 
-In this section, you will need to discuss the algorithms and techniques you intend to use for solving the problem. You should justify the use of each one based on the characteristics of the problem and the problem domain. Questions to ask yourself when writing this section:
-- _Are the algorithms you will use, including any default variables/parameters in the project clearly defined?_
-- _Are the techniques to be used thoroughly discussed and justified?_
-- _Is it made clear how the input data or datasets will be handled by the algorithms and techniques chosen?_
+From this table, we see that MPRNet is a good choice of model for deblurring since it is lightweight, fast and achieves the best results.
 
 ### Benchmark
-In this section, you will need to provide a clearly defined benchmark result or threshold for comparing across performances obtained by your solution. The reasoning behind the benchmark (in the case where it is not an established result) should be discussed. Questions to ask yourself when writing this section:
-- _Has some result or value been provided that acts as a benchmark for measuring performance?_
-- _Is it clear how this result or value was obtained (whether by data or by hypothesis)?_
+The paper mentioned above illustrates various benchmarks and compares the results obtained with the model on benchmark models. We have created our own image and tested the model on that image to see if we achieved simliar PSNR. Here are two images. The left one is a blurred image and the right one is on on which we have run the model described here. We can notice by looking carefully at the image on the right that it was improved compared to the image on the left. 
+
+We calculated the PSNR of these two images and we note a drastic improvement of 41 dB. This means that blur was greatly remnovede from the image and that we are happy with the results.
 
 
 ## III. Methodology
-_(approx. 3-5 pages)_
 
 ### Data Preprocessing
-In this section, all of your preprocessing steps will need to be clearly documented, if any were necessary. From the previous section, any of the abnormalities or characteristics that you identified about the dataset will be addressed and corrected here. Questions to ask yourself when writing this section:
-- _If the algorithms chosen require preprocessing steps like feature selection or feature transformations, have they been properly documented?_
-- _Based on the **Data Exploration** section, if there were abnormalities or characteristics that needed to be addressed, have they been properly corrected?_
-- _If no preprocessing is needed, has it been made clear why?_
+In this work, we propose a multi-stage architecture for
+image restoration that progressively improves degraded inputs by injecting supervision at each stage. We develop
+guiding principles for our design that demand complementary feature processing in multiple stages and a flexible information exchange between them. To this end, we propose
+contextually-enriched and spatially accurate stages that encode a diverse set of features in unison. To ensure synergy
+between reciprocal stages, we propose feature fusion across
+stages and an attention guided output exchange from earlier stages to the later ones. Our model achieves significant
+performance gains on numerous benchmark datasets. In addition, our model is light-weighted in te
 
 ### Implementation
-In this section, the process for which metrics, algorithms, and techniques that you implemented for the given data will need to be clearly documented. It should be abundantly clear how the implementation was carried out, and discussion should be made regarding any complications that occurred during this process. Questions to ask yourself when writing this section:
-- _Is it made clear how the algorithms and techniques were implemented with the given datasets or input data?_
-- _Were there any complications with the original metrics or techniques that required changing prior to acquiring a solution?_
-- _Was there any part of the coding process (e.g., writing complicated functions) that should be documented?_
+De prohibitively high. As such, it is of great interest to develop resource-efficient image restoration models. One solution is to train the same network by adjusting its capacity every time the target system is changed. However, it
+is tedious and oftentimes infeasible. A more desirable approach is to have a single network that can make (a) early
+predictions for compute efficient systems and (b) latter predictions to obtain high accuracy. A multi-stage restoration
+model naturally offers such functionalities.
+Table 7 reports the stage-wise results of our multi-stage
+approach. Our MPRNet demonstrates competitive restoration performance at each stage. Notably, our stage-1 model
+is light, fast, and yields better results th
 
 ### Refinement
-In this section, you will need to discuss the process of improvement you made upon the algorithms and techniques you used in your implementation. For example, adjusting parameters for certain models to acquire improved solutions would fall under the refinement category. Your initial and final solutions should be reported, as well as any significant intermediate results as necessary. Questions to ask yourself when writing this section:
-- _Has an initial solution been found and clearly reported?_
-- _Is the process of improvement clearly documented, such as what techniques were used?_
-- _Are intermediate and final solutions clearly reported as the process is improved?_
+We report the performance of evaluated image deblurring approaches on the synthetic GoPro [53] and HIDE [69]
+datasets in Table 3. Overall, our model performs favorably
+against other algorithms. Compared to the previous best
+performing technique [70], our method achieves 9% improvement in PSNR and 21% in SSIM on the GoPro [53]
+dataset, and a 11% and 13% reduction in error on the HIDE
+dataset [69]. It is worth noticing that our network is trained
+only on the GoPro dataset, but achieves the state-of-the-art
+results (+0.98 dB) on the HIDE dataset, thereby demonstrating its strong generalization capability.
+We evaluate our MPRNet on the real-world images of
+a recent RealBlur [64] dataset under two experimental settings: 1). apply the GoPro trained model directly on RealBlur (to test generalization to real images), and 2). train
+and test on RealBlur data. Table 4 shows the experimental results. For setting 1, our MPRNet obtains performance
+gains of 0.29 dB on the RealBlur-R subset and 0.28 dB
+on the RealBlur-J subset over the DMPHN algorithm [88].
+A similar trend is observed for setting 2, where our gains
+over SRN [71] are 0.66 dB and 0.38 dB on RealBlur-R and
+RealBlur-J, respectively.
+Figure 6 shows some deblurred images by the evaluated
+approaches. Overall, the images restored by our model are
+sharper and closer to the ground-truth than those by others.We report the performance of evaluated image deblurring approaches on the synthetic GoPro [53] and HIDE [69]
+datasets in Table 3. Overall, our model performs favorably
+against other algorithms. Compared to the previous best
+performing technique [70], our method achieves 9% improvement in PSNR and 21% in SSIM on the GoPro [53]
+dataset, and a 11% and 13% reduction in error on the HIDE
+dataset [69]. It is worth noticing that our network is trained
+only on the GoPro dataset, but achieves the state-of-the-art
+results (+0.98 dB) on the HIDE dataset, thereby demonstrating its strong generalization capability.
+We evaluate our MPRNet on the real-world images of
+a recent RealBlur [64] dataset under two experimental settings: 1). apply the GoPro trained model directly on RealBlur (to test generalization to real images), and 2). train
+and test on RealBlur data. Table 4 shows the experimental results. For setting 1, our MPRNet obtains performance
+gains of 0.29 dB on the RealBlur-R subset and 0.28 dB
+on the RealBlur-J subset over the DMPHN algorithm [88].
+A similar trend is observed for setting 2, where our gains
+over SRN [71] are 0.66 dB and 0.38 dB on RealBlur-R and
+RealBlur-J, respectively.
+Figure 6 shows some deblurred images by the evaluated
+approaches. Overall, the images restored by our model are
+sharper and closer to the ground-truth than those by others.
 
 
 ## IV. Results
-_(approx. 2-3 pages)_
 
 ### Model Evaluation and Validation
-In this section, the final model and any supporting qualities should be evaluated in detail. It should be clear how the final model was derived and why this model was chosen. In addition, some type of analysis should be used to validate the robustness of this model and its solution, such as manipulating the input data or environment to see how the model’s solution is affected (this is called sensitivity analysis). Questions to ask yourself when writing this section:
-- _Is the final model reasonable and aligning with solution expectations? Are the final parameters of the model appropriate?_
-- _Has the final model been tested with various inputs to evaluate whether the model generalizes well to unseen data?_
-- _Is the model robust enough for the problem? Do small perturbations (changes) in training data or the input space greatly affect the results?_
-- _Can results found from the model be trusted?_
+Datasets in Table 3. Overall, our model performs favorably
+against other algorithms. Compared to the previous best
+performing technique [70], our method achieves 9% improvement in PSNR and 21% in SSIM on the GoPro [53]
+dataset, and a 11% and 13% reduction in error on the HIDE
+dataset [69]. It is worth noticing that our network is trained
+only on the GoPro dataset, but achieves the state-of-the-art
+results (+0.98 dB) on the HIDE dataset, thereby demonstrating its strong generalization capability.
+We evaluate our MPRNet on the real-world images of
+a recent RealBlur [64] dataset under two experimental settings: 1). apply the GoPro trained model directly on RealBlur (to test generalization to real images), and 2). train
+and test on RealBlur data. Table 4 shows the experimental results. For setting 1, our MPRNet obtains performance
+gains of 0.29 dB on the RealBlur-R subset and 0.28 dB
+on the RealBlur-J subset over the DMPHN algorithm [88].
+A similar trend is observed for setting 2, where our gains
+over SRN [71] are 0.66 dB and 0.38 dB on RealBlur-R and
+RealBlur-J, respectively.
+Figure 6 shows some deblurred images by the evaluated
+approaches. Overall, the images restored by our model are
+sharper and closer to the ground-truth than those by others.
 
 ### Justification
 In this section, your model’s final solution and its results should be compared to the benchmark you established earlier in the project using some type of statistical analysis. You should also justify whether these results and the solution are significant enough to have solved the problem posed in the project. Questions to ask yourself when writing this section:
@@ -115,35 +165,49 @@ In this section, your model’s final solution and its results should be compare
 
 
 ## V. Conclusion
-_(approx. 1-2 pages)_
 
 ### Free-Form Visualization
-In this section, you will need to provide some form of visualization that emphasizes an important quality about the project. It is much more free-form, but should reasonably support a significant result or characteristic about the problem that you want to discuss. Questions to ask yourself when writing this section:
-- _Have you visualized a relevant or important quality about the problem, dataset, input data, or results?_
-- _Is the visualization thoroughly analyzed and discussed?_
-- _If a plot is provided, are the axes, title, and datum clearly defined?_
+
+
 
 ### Reflection
-In this section, you will summarize the entire end-to-end problem solution and discuss one or two particular aspects of the project you found interesting or difficult. You are expected to reflect on the project as a whole to show that you have a firm understanding of the entire process employed in your work. Questions to ask yourself when writing this section:
-- _Have you thoroughly summarized the entire process you used for this project?_
-- _Were there any interesting aspects of the project?_
-- _Were there any difficult aspects of the project?_
-- _Does the final model and solution fit your expectations for the problem, and should it be used in a general setting to solve these types of problems?_
+We report the performance of evaluated image deblurring approaches on the synthetic GoPro [53] and HIDE [69]
+datasets in Table 3. Overall, our model performs favorably
+against other algorithms. Compared to the previous best
+performing technique [70], our method achieves 9% improvement in PSNR and 21% in SSIM on the GoPro [53]
+dataset, and a 11% and 13% reduction in error on the HIDE
+dataset [69]. It is worth noticing that our network is trained
+only on the GoPro dataset, but achieves the state-of-the-art
+results (+0.98 dB) on the HIDE dataset, thereby demonstrating its strong generalization capability.
+We evaluate our MPRNet on the real-world images of
+a recent RealBlur [64] dataset under two experimental settings: 1). apply the GoPro trained model directly on RealBlur (to test generalization to real images), and 2). train
+and test on RealBlur data. Table 4 shows the experimental results. For setting 1, our MPRNet obtains performance
+gains of 0.29 dB on the RealBlur-R subset and 0.28 dB
+on the RealBlur-J subset over the DMPHN algorithm [88].
+A similar trend is observed for setting 2, where our gains
+over SRN [71] are 0.66 dB and 0.38 dB on RealBlur-R and
+RealBlur-J, respectively.
+Figure 6 shows some deblurred images by the evaluated
+approaches. Overall, the images restored by our model are
+sharper and closer to the ground-truth than those by others.for the problem, and should it be used in a general setting to solve these types of problems?_
 
 ### Improvement
-In this section, you will need to provide discussion as to how one aspect of the implementation you designed could be improved. As an example, consider ways your implementation can be made more general, and what would need to be modified. You do not need to make this improvement, but the potential solutions resulting from these changes are considered and compared/contrasted to your current solution. Questions to ask yourself when writing this section:
-- _Are there further improvements that could be made on the algorithms or techniques you used in this project?_
-- _Were there algorithms or techniques you researched that you did not know how to implement, but would consider using if you knew how?_
-- _If you used your final solution as the new benchmark, do you think an even better solution exists?_
-
------------
-
-**Before submitting, ask yourself. . .**
-
-- Does the project report you’ve written follow a well-organized structure similar to that of the project template?
-- Is each section (particularly **Analysis** and **Methodology**) written in a clear, concise and specific fashion? Are there any ambiguous terms or phrases that need clarification?
-- Would the intended audience of your project be able to understand your analysis, methods, and results?
-- Have you properly proof-read your project report to assure there are minimal grammatical and spelling mistakes?
-- Are all the resources used for this project correctly cited and referenced?
-- Is the code that implements your solution easily readable and properly commented?
-- Does the code execute without error and produce results similar to those reported?
+We report the performance of evaluated image deblurring approaches on the synthetic GoPro [53] and HIDE [69]
+datasets in Table 3. Overall, our model performs favorably
+against other algorithms. Compared to the previous best
+performing technique [70], our method achieves 9% improvement in PSNR and 21% in SSIM on the GoPro [53]
+dataset, and a 11% and 13% reduction in error on the HIDE
+dataset [69]. It is worth noticing that our network is trained
+only on the GoPro dataset, but achieves the state-of-the-art
+results (+0.98 dB) on the HIDE dataset, thereby demonstrating its strong generalization capability.
+We evaluate our MPRNet on the real-world images of
+a recent RealBlur [64] dataset under two experimental settings: 1). apply the GoPro trained model directly on RealBlur (to test generalization to real images), and 2). train
+and test on RealBlur data. Table 4 shows the experimental results. For setting 1, our MPRNet obtains performance
+gains of 0.29 dB on the RealBlur-R subset and 0.28 dB
+on the RealBlur-J subset over the DMPHN algorithm [88].
+A similar trend is observed for setting 2, where our gains
+over SRN [71] are 0.66 dB and 0.38 dB on RealBlur-R and
+RealBlur-J, respectively.
+Figure 6 shows some deblurred images by the evaluated
+approaches. Overall, the images restored by our model are
+sharper and closer to the ground-truth than those by others.
